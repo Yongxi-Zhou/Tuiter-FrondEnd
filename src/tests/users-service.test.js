@@ -65,7 +65,6 @@ describe("deleteUsersByUsername", () => {
   });
 });
 
-//123
 describe("findUserById", () => {
   // sample user we want to retrieve
   const adam = {
