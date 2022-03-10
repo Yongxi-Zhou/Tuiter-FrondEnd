@@ -129,7 +129,7 @@ describe("findAllUsers", () => {
   test("can retrieve all users from REST API", async () => {
     // retrieve all the users
     const users = await findAllUsers();
-    console.log(usernames);
+
     // there should be a minimum number of users
     expect(users.length).toBeGreaterThanOrEqual(usernames.length);
 
@@ -137,11 +137,11 @@ describe("findAllUsers", () => {
     const usersWeInserted = users.filter(
       (user) => usernames.indexOf(user.username) >= 0
     );
-    console.log(usersWeInserted);
+    // console.log(usersWeInserted);
 
     // compare the actual users in database with the ones we sent
     usersWeInserted.forEach((user) => {
-      console.log(usernames);
+      // console.log(usernames);
       const username = usernames.find((username) => username === user.username);
       expect(user.username).toEqual(username);
       expect(user.password).toEqual(`${username}123`);

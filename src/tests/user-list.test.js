@@ -21,6 +21,7 @@ const MOCKED_USERS = [
   },
 ];
 
+// Testing user interfaces rendering with static data
 test("user list renders static user array", () => {
   render(
     <HashRouter>
@@ -31,6 +32,7 @@ test("user list renders static user array", () => {
   expect(linkElement).toBeInTheDocument();
 });
 
+// Mocking RESTful Web service APIs to isolate user interface tests
 test("user list renders mocked", async () => {
   axios.get.mockImplementation(() =>
     Promise.resolve({ data: { users: MOCKED_USERS } })
@@ -47,15 +49,3 @@ test("user list renders mocked", async () => {
   const user = screen.getByText(/ellen_ripley/i);
   expect(user).toBeInTheDocument();
 });
-
-// test("user list renders async", async () => {
-//   const users = await findAllUsers();
-//   console.log(users);
-//   render(
-//     <HashRouter>
-//       <UserList users={users} />
-//     </HashRouter>
-//   );
-//   const linkElement = screen.getByText(/NASA/i);
-//   expect(linkElement).toBeInTheDocument();
-// });

@@ -9,9 +9,7 @@ export const createUser = (user) =>
   axios.post(`${USERS_API}`, user).then((response) => response.data);
 
 export const findAllUsers = () => {
-  console.log(USERS_API);
   return axios.get(USERS_API).then((response) => {
-    console.log(response.data);
     return response.data;
   });
 };

@@ -25,7 +25,6 @@ describe("can create tuit with REST API", () => {
     tuit: "Hello World",
   };
 
-  // setup before running test
   afterAll(() => {
     // clean up before the test making sure the user doesn't already exist
     return deleteUsersByUsername(adam.username);
@@ -43,6 +42,7 @@ describe("can create tuit with REST API", () => {
     expect(newTuit.postedBy).toEqual(newUser._id);
     expect(newTuit.tuit).toEqual(staticTuit.tuit);
 
+    // delete tuits after finishing test
     const status = await deleteTuit(newTuit._id);
     expect(status.deletedCount).toBeGreaterThanOrEqual(1);
   });
@@ -58,6 +58,11 @@ describe("can delete tuit wtih REST API", () => {
   const staticTuit = {
     tuit: "toDelete",
   };
+
+  afterAll(() => {
+    // clean up before the test making sure the user doesn't already exist
+    return deleteUsersByUsername(adam.username);
+  });
 
   test("can delete tuit wtih REST API", async () => {
     const newUser = await createUser(adam);
@@ -99,6 +104,7 @@ describe("can retrieve a tuit by their primary key with REST API", () => {
     const newTuitId = newTuit._id;
     const requestTuit = await findTuitById(newTuit._id);
 
+    // to test the requested id equals to the local id
     expect(newTuitId).toEqual(requestTuit._id);
 
     // delete a tuit by their id. Assumes tuit already exists
@@ -110,31 +116,6 @@ describe("can retrieve a tuit by their primary key with REST API", () => {
 
 describe("can retrieve all tuits with REST API", () => {
   // TODO: implement this
-  const adam = {
-    username: "adam_smith",
-    password: "not0sum",
-    email: "wealth@nations.com",
-  };
-  // const TuitList = [
-  //   {
-  //     tuit: "TuitOne",
-  //   },
-  //   {
-  //     tuit: "TuitTwo",
-  //   },
-  //   {
-  //     tuit: "TuitThree",
-  //   },
-  //   {
-  //     tuit: "TuitFour",
-  //   },
-  //   {
-  //     tuit: "TuitFive",
-  //   },
-  //   {
-  //     tuit: "TuitSix",
-  //   },
-  // ];
 
   const sampleTuitList = [
     "TuitOne",
@@ -143,35 +124,26 @@ describe("can retrieve all tuits with REST API", () => {
     "TuitFour",
     "TuitFive",
   ];
-  const requestTuit = [];
-  const ids = [];
-
-  beforeAll(() => {
-    const newUser = createUser(adam);
-    sampleTuitList.map((tuit) => createTuit(newUser._id, { tuit: tuit }));
-  });
-
-  // afterAll(() => {
-  //   ids.map((tuitId) => deleteTuit(tuitId));
-  // });
 
   test("can retrieve all tuits with REST API", async () => {
     const tuits = await findAllTuits();
-    // console.log(tuits);
+
     const tuitsInsert = tuits.filter((tuit) =>
       sampleTuitList.includes(tuit.tuit)
     );
 
+    //get all ids of the sample tuits for deleting after test
     const ids = tuitsInsert.map((item) => item._id);
 
+    // get the item matching those in the sample list
     tuitsInsert.forEach((tuit) => {
       const sample = sampleTuitList.find(
         (sampleTuit) => sampleTuit === tuit.tuit
       );
-
       expect(sample).toEqual(tuit.tuit);
     });
 
+    // delete all test sample after finishing the test
     ids.forEach(async (id) => {
       const status = await deleteTuit(id);
       expect(status.deletedCount).toBeGreaterThanOrEqual(1);
