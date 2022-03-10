@@ -98,9 +98,11 @@ describe("findUserById", () => {
     const existingUser = await findUserById(newUser._id);
 
     // verify retrieved user matches parameter user
-    expect(existingUser.username).toEqual(adam.username);
-    expect(existingUser.password).toEqual(adam.password);
-    expect(existingUser.email).toEqual(adam.email);
+    if (existingUser !== null) {
+      expect(existingUser.username).toEqual(adam.username);
+      expect(existingUser.password).toEqual(adam.password);
+      expect(existingUser.email).toEqual(adam.email);
+    }
   });
 });
 

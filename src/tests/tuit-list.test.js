@@ -3,21 +3,8 @@ import { screen, render } from "@testing-library/react";
 import { HashRouter } from "react-router-dom";
 import axios from "axios";
 
-import {
-  findAllTuits,
-  findTuitById,
-  findTuitByUser,
-  createTuit,
-  updateTuit,
-  deleteTuit,
-} from "../services/tuits-service";
+import { findAllTuits } from "../services/tuits-service";
 
-import {
-  createUser,
-  deleteUsersByUsername,
-  findAllUsers,
-  findUserById,
-} from "../services/users-service";
 import Tuit from "../components/tuits/tuit";
 
 jest.mock("axios");

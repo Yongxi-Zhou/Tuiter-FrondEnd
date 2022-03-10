@@ -1,6 +1,6 @@
 import axios from "axios";
-// const BASE_URL = "https://tuiter-app.herokuapp.com/api";
-const BASE_URL = "http://localhost:4000/api";
+const BASE_URL = "https://tuiter-app.herokuapp.com/api";
+// const BASE_URL = "http://localhost:4000/api";
 
 const TUITS_API = `${BASE_URL}/tuits`;
 const USERS_API = `${BASE_URL}/users`;
@@ -17,7 +17,7 @@ export const findTuitByUser = (uid) =>
 
 export const createTuit = (uid, tuit) => {
   return axios
-    .post(`http://localhost:4000/api/users/${uid}/tuits`, tuit)
+    .post(`${USERS_API}/${uid}/tuits`, tuit)
     .then((response) => response.data);
 };
 
