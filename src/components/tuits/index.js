@@ -11,6 +11,12 @@ const Tuits = ({ tuits = [], refreshTuits }) => {
       .catch((e) => alert(e));
   const deleteTuit = (tid) => service.deleteTuit(tid).then(refreshTuits);
 
+  const dislikeTuit = (tuit) =>
+    likesService
+      .userDislikesTuit("me", tuit._id)
+      .then(refreshTuits)
+      .catch((e) => alert(e));
+
   return (
     //like button
     <div>
@@ -21,6 +27,7 @@ const Tuits = ({ tuits = [], refreshTuits }) => {
               key={tuit._id}
               deleteTuit={deleteTuit}
               likeTuit={likeTuit}
+              dislikeTuit={dislikeTuit}
               tuit={tuit}
             />
           ))}
