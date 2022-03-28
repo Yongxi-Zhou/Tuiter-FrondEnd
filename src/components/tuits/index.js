@@ -29,6 +29,8 @@ const Tuits = ({ tuits = [], refreshTuits }) => {
               likeTuit={likeTuit}
               dislikeTuit={dislikeTuit}
               tuit={tuit}
+              // isliked = {}
+              // isdisliked = {}
             />
           ))}
       </ul>
