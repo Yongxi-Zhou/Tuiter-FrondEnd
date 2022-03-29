@@ -18,13 +18,16 @@ const Profile = () => {
   const location = useLocation();
   console.log(location);
   const [profile, setProfile] = useState({});
-  useEffect(async () => {
-    try {
-      const user = await service.profile();
-      setProfile(user);
-    } catch (e) {
-      navigate("/login");
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const user = await service.profile();
+        setProfile(user);
+      } catch (e) {
+        navigate("/login");
+      }
     }
+    fetchData();
   }, []);
   const logout = () => {
     service.logout().then(() => navigate("/login"));
