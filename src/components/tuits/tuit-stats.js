@@ -1,6 +1,42 @@
 import React from "react";
+import { useState } from "react";
+import { checkIfDislike, checkIfLike } from "../../services/likes-service";
 
 const TuitStats = ({ tuit, likeTuit = () => {}, dislikeTuit = () => {} }) => {
+  const [isliked, setLiked] = useState(null);
+  const [isdisliked, setDisliked] = useState(null);
+  const handleLike = async () => {
+    await likeTuit(tuit);
+    const liked = await checkIfLike("me", tuit._id);
+    if (liked) {
+      setLiked(true);
+    } else {
+      setLiked(false);
+    }
+    const disliked = await checkIfDislike("me", tuit._id);
+    if (disliked) {
+      setDisliked(true);
+    } else {
+      setDisliked(false);
+    }
+  };
+
+  const handleDisike = async () => {
+    await dislikeTuit(tuit);
+    const liked = await checkIfLike("me", tuit._id);
+    if (liked) {
+      setLiked(true);
+    } else {
+      setLiked(false);
+    }
+    const disliked = await checkIfDislike("me", tuit._id);
+    if (disliked) {
+      setDisliked(true);
+    } else {
+      setDisliked(false);
+    }
+  };
+
   return (
     <div className="row mt-2">
       <div className="col">
@@ -13,12 +49,12 @@ const TuitStats = ({ tuit, likeTuit = () => {}, dislikeTuit = () => {} }) => {
       </div>
       <div className="col">
         {/* liketuits  */}
-        <span onClick={() => likeTuit(tuit)}>
+        <span onClick={() => handleLike()}>
           {/* if tid and uid have like relationship, show the solid thumb up */}
-          {tuit.stats && tuit.stats.likes && tuit.stats.likes > 0 ? (
+          {isliked ? (
             <i
               className="fa-solid fa-thumbs-up me-1"
-              style={{ color: "red" }}
+              style={{ color: "orange" }}
             ></i>
           ) : (
             <i className="fa-light fa-thumbs-up me-1"></i>
@@ -28,11 +64,11 @@ const TuitStats = ({ tuit, likeTuit = () => {}, dislikeTuit = () => {} }) => {
       </div>
       <div className="col">
         {/* dislikeTuits  */}
-        <span onClick={() => dislikeTuit(tuit)}>
-          {tuit.stats && tuit.stats.dislikes && tuit.stats.dislikes > 0 ? (
+        <span onClick={() => handleDisike()}>
+          {isdisliked ? (
             <i
               className="fa-solid fa-thumbs-down me-1"
-              style={{ color: "red" }}
+              style={{ color: "orange" }}
             ></i>
           ) : (
             <i className="fa-light fa-thumbs-down me-1"></i>

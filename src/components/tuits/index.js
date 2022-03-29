@@ -4,11 +4,13 @@ import Tuit from "./tuit";
 import * as likesService from "../../services/likes-service";
 import * as service from "../../services/tuits-service";
 const Tuits = ({ tuits = [], refreshTuits }) => {
-  const likeTuit = (tuit) =>
-    likesService
+  const likeTuit = (tuit) => {
+    console.log(tuits);
+    return likesService
       .userLikesTuit("me", tuit._id)
       .then(refreshTuits)
       .catch((e) => alert(e));
+  };
   const deleteTuit = (tid) => service.deleteTuit(tid).then(refreshTuits);
 
   const dislikeTuit = (tuit) =>
@@ -19,6 +21,7 @@ const Tuits = ({ tuits = [], refreshTuits }) => {
 
   return (
     //like button
+
     <div>
       <ul className="ttr-tuits list-group">
         {tuits.map &&
@@ -29,8 +32,6 @@ const Tuits = ({ tuits = [], refreshTuits }) => {
               likeTuit={likeTuit}
               dislikeTuit={dislikeTuit}
               tuit={tuit}
-              // isliked = {}
-              // isdisliked = {}
             />
           ))}
       </ul>
