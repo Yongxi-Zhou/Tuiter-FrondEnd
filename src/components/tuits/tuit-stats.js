@@ -1,40 +1,41 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { checkIfDislike, checkIfLike } from "../../services/likes-service";
 
 const TuitStats = ({ tuit, likeTuit = () => {}, dislikeTuit = () => {} }) => {
   const [isliked, setLiked] = useState(null);
   const [isdisliked, setDisliked] = useState(null);
-  const handleLike = async () => {
-    await likeTuit(tuit);
-    const liked = await checkIfLike("me", tuit._id);
+
+  useEffect(() => {
+    checkLike();
+    checkDislike();
+  }, []);
+  const checkLike = async () => {
+    let liked = await checkIfLike("me", tuit._id);
     if (liked) {
       setLiked(true);
     } else {
       setLiked(false);
     }
-    const disliked = await checkIfDislike("me", tuit._id);
+  };
+  const checkDislike = async () => {
+    let disliked = await checkIfDislike("me", tuit._id);
     if (disliked) {
       setDisliked(true);
     } else {
       setDisliked(false);
     }
   };
+  const handleLike = async () => {
+    await likeTuit(tuit);
+    await checkLike();
+    await checkDislike();
+  };
 
   const handleDisike = async () => {
     await dislikeTuit(tuit);
-    const liked = await checkIfLike("me", tuit._id);
-    if (liked) {
-      setLiked(true);
-    } else {
-      setLiked(false);
-    }
-    const disliked = await checkIfDislike("me", tuit._id);
-    if (disliked) {
-      setDisliked(true);
-    } else {
-      setDisliked(false);
-    }
+    await checkLike();
+    await checkDislike();
   };
 
   return (

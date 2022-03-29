@@ -25,15 +25,14 @@ export const userDislikesTuit = (uid, tid) => {
 };
 
 export const checkIfLike = (uid, tid) => {
-  console.log("iflike");
   return api.get(`${USERS_API}/${uid}/likes/${tid}`).then((response) => {
-    console.log(response);
+    // console.log(response);
     return response.data;
   });
 };
 
 export const checkIfDislike = (uid, tid) => {
-  console.log("ifdislike");
+  // console.log("ifdislike");
   return api
     .get(`${USERS_API}/${uid}/dislikes/${tid}`)
     .then((response) => response.data);
