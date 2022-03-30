@@ -6,10 +6,10 @@ const TuitStats = ({ tuit, likeTuit = () => {}, dislikeTuit = () => {} }) => {
   const [isliked, setLiked] = useState(null);
   const [isdisliked, setDisliked] = useState(null);
 
-  useEffect(() => {
-    checkLike();
-    checkDislike();
-  }, []);
+  // useEffect(() => {
+  //   checkLike();
+  //   checkDislike();
+  // }, []);
 
   const checkLike = async () => {
     let liked = await checkIfLike("me", tuit._id);
