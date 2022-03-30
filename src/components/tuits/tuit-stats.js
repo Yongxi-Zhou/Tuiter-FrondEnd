@@ -5,12 +5,12 @@ import { checkIfDislike, checkIfLike } from "../../services/likes-service";
 const TuitStats = ({ tuit, likeTuit = () => {}, dislikeTuit = () => {} }) => {
   const [isliked, setLiked] = useState(null);
   const [isdisliked, setDisliked] = useState(null);
-  /*
+
   useEffect(() => {
     checkLike();
     checkDislike();
   }, []);
-  */
+
   const checkLike = async () => {
     let liked = await checkIfLike("me", tuit._id);
     if (liked) {
